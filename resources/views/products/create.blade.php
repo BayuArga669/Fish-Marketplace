@@ -10,7 +10,7 @@
                     <h4 class="mb-0"><i class="fas fa-fish"></i> Tambah Produk Ikan</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('seller.products.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">

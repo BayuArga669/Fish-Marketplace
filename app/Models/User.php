@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->role === 'buyer';
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(\App\Models\CartItem::class);
+    }
 }

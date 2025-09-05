@@ -11,7 +11,7 @@
                     <a href="{{ route('shop.edit') }}" class="btn btn-warning">
                         <i class="fas fa-edit"></i> Edit Lapak
                     </a>
-                    <a href="{{ route('products.create') }}" class="btn btn-success">
+                    <a href="{{ route('seller.products.create') }}" class="btn btn-success">
                         <i class="fas fa-plus"></i> Tambah Produk
                     </a>
                 </div>
@@ -86,11 +86,11 @@
                                                        class="btn btn-info" title="Lihat">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('products.edit', $product) }}" 
+                                                    <a href="{{ route('seller.products.edit', $product) }}" 
                                                        class="btn btn-warning" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <form action="{{ route('products.destroy', $product) }}" 
+                                                    <form action="{{ route('seller.products.destroy', $product) }}" 
                                                           method="POST" style="display: inline;"
                                                           onsubmit="return confirm('Yakin ingin hapus produk ini?')">
                                                         @csrf

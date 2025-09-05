@@ -10,58 +10,90 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="fas fa-fish"></i> Pasar Ikan
-            </a>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('home') }}">
+            <i class="fas fa-fish"></i> Pasar Ikan
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('products.index') }}">Produk</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('shops.index') }}">Lapak</a>
+                </li>
+            </ul>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('products.index') }}">Produk</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('shops.index') }}">Lapak</a>
-                    </li>
-                </ul>
-                
-                <ul class="navbar-nav">
-                    @auth
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
-                                @if(Auth::user()->isSeller())
-                                    <li><a class="dropdown-item" href="{{ route('shop.manage') }}">Kelola Lapak</a></li>
+            <ul class="navbar-nav">
+                @auth
+                    @if(Auth::user()->role === 'buyer')
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="{{ route('cart.index') }}">
+                                <i class="fas fa-shopping-cart"></i>
+                                @if(Auth::user()->cartItems->count() > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        {{ Auth::user()->cartItems->sum('quantity') }}
+                                    </span>
                                 @endif
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Daftar</a>
+                            <a class="nav-link" href="{{ route('orders.index') }}">
+                                <i class="fas fa-list-alt"></i> Pesanan
+                            </a>
                         </li>
-                    @endauth
-                </ul>
-            </div>
+                    @endif
+                    
+                    @if(Auth::user()->role === 'seller')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('seller.orders.index') }}">
+                                <i class="fas fa-clipboard-list"></i> 
+                                Pesanan Masuk
+                                @if(Auth::user()->shop && Auth::user()->shop->pendingOrdersCount() > 0)
+                                    <span class="badge bg-warning text-dark ms-1">
+                                        {{ Auth::user()->shop->pendingOrdersCount() }}
+                                    </span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
+                            @if(Auth::user()->isSeller())
+                                <li><a class="dropdown-item" href="{{ route('shop.manage') }}">Kelola Lapak</a></li>
+                            @endif
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Daftar</a>
+                    </li>
+                @endauth
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Main Content -->
     <main class="py-4">

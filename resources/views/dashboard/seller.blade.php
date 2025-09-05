@@ -65,7 +65,7 @@
                             <a href="{{ route('shop.manage') }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-cog"></i> Kelola Lapak
                             </a>
-                            <a href="{{ route('products.create') }}" class="btn btn-success btn-sm">
+                            <a href="{{ route('seller.products.create') }}" class="btn btn-success btn-sm">
                                 <i class="fas fa-plus"></i> Tambah Produk
                             </a>
                         </div>
